@@ -1,0 +1,41 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">Add Document to Knowledge Base</h1>
+
+  <%= form_with model: @document, url: documents_path, local: true, class: "bg-white shadow rounded-lg p-6" do |f| %>
+    <% if @document.errors.any? %>
+      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+        <ul class="list-disc list-inside">
+          <% @document.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-4">
+      <%= f.label :title, class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= f.text_field :title, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :source, "Source (optional)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= f.text_field :source, placeholder: "e.g., manual, import, api", class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :url, "URL (optional)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= f.url_field :url, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :content, "Content", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= f.text_area :content, rows: 15, placeholder: "Paste or type the document content here...", class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 font-mono text-sm" %>
+      <p class="mt-1 text-sm text-gray-500">The content will be automatically chunked and embedded for semantic search.</p>
+    </div>
+
+    <div class="flex justify-end space-x-4">
+      <%= link_to "Cancel", documents_path, class: "px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition" %>
+      <%= f.submit "Ingest Document", class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition" %>
+    </div>
+  <% end %>
+</div>

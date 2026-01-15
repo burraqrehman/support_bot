@@ -1,0 +1,45 @@
+<div class="max-w-6xl mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-900">Knowledge Base Documents</h1>
+    <%= link_to "Add Document", new_document_path, class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition" %>
+  </div>
+
+  <% if @documents.any? %>
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Chunks</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @documents.each do |document| %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <%= link_to document.title, document_path(document), class: "text-blue-600 hover:text-blue-800" %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= document.source %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= document.document_chunks.count %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= document.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <%= link_to "View", document_path(document), class: "text-blue-600 hover:text-blue-800 mr-4" %>
+                <%= link_to "Delete", document_path(document), method: :delete, 
+                    data: { confirm: "Are you sure?" }, 
+                    class: "text-red-600 hover:text-red-800" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="bg-white shadow rounded-lg p-8 text-center">
+      <p class="text-gray-500 mb-4">No documents in the knowledge base yet.</p>
+      <%= link_to "Add Your First Document", new_document_path, class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition inline-block" %>
+    </div>
+  <% end %>
+</div>
